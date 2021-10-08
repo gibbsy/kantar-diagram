@@ -1,0 +1,8 @@
+{
+  "eslint.validate": ["javascript", "html", "vue"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  "vetur.validation.template": false
+}
