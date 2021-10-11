@@ -1,0 +1,106 @@
+@mixin section-container(
+  $flex: column,
+  $justify: flex-start,
+  $align: flex-start
+) {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: $flex;
+  align-items: $align;
+  justify-content: $justify;
+  overflow: hidden;
+  @include bp(1024) {
+    min-height: var(--section-height, auto);
+  }
+}
+
+@mixin footer-padding() {
+  padding: 4rem 2rem;
+
+  @include bp(768) {
+    padding: 2rem 12% 10px 6rem;
+  }
+  @include bp(1024) {
+    padding: 2rem 25% 10px 10%;
+  }
+
+  @include bp(1200) {
+    padding: 3rem 0 10px 7%;
+  }
+  @include bp(1400) {
+    padding: 4rem 0 20px 10%;
+  }
+}
+@mixin min-padding() {
+  padding: 2rem 1rem;
+
+  @include bp(1024) {
+    padding: 2rem 5%;
+  }
+  @include bp(1200) {
+    padding: 3rem 7%;
+  }
+  @include bp(1400) {
+    padding: 4rem 10%;
+  }
+}
+@mixin standard-padding() {
+  padding: 5rem 1.75rem;
+  @include bp(768) {
+    padding: 6rem;
+  }
+
+  @include bp(1024) {
+    padding: 12vh 10%;
+  }
+
+  @include bp(1400) {
+    padding: 12vh 10%;
+  }
+  @include bp(2600) {
+    padding: 18vh 10%;
+  }
+}
+@mixin extra-padding() {
+  padding: 6rem 1.5rem;
+  @include bp(768) {
+    padding: 6rem;
+  }
+  @include bp(1024) {
+    padding: 15vh 10%;
+  }
+
+  @include bp(1400) {
+    padding: 20vh 10%;
+  }
+  @include bp(2600) {
+    padding: 24vh 10%;
+  }
+}
+
+@mixin content-block(
+  $padding: 0,
+  $flex: column,
+  $justify: flex-start,
+  $align: flex-start
+) {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: $flex;
+  align-items: $align;
+  justify-content: $justify;
+  max-width: 2400px;
+  .page-hero-container &,
+  .hero-container & {
+    max-width: 2800px;
+  }
+  @if $padding== "standard" {
+    @include standard-padding();
+  }
+  @if $padding== "extra" {
+    @include extra-padding();
+  }
+}

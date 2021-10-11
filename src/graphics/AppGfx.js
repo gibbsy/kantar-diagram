@@ -1,9 +1,10 @@
 import bus from "./eventBus.js";
+import VideoSprite from "./AppVideo.js";
 import Diagram from "./AppDiagram.js";
 import manifest from "./manifest.js";
 
 export default class AppGfx extends PIXI.Application {
-  constructor(el) {
+  constructor(el, appData) {
     const domElement = el;
 
     PIXI.settings.PRECISION_FRAGMENT = "highp";
@@ -28,6 +29,7 @@ export default class AppGfx extends PIXI.Application {
       autoDensity: true,
       resolution: window.devicePixelRatio,
     });
+    this.appData = appData;
     this.domElement = domElement;
     this.loaded = 0;
     this.animating = true;
@@ -72,7 +74,7 @@ export default class AppGfx extends PIXI.Application {
     events.on("USER_ACTION", (e) => {
       this.userAction(e);
     });
-
+    // this.Video = new VideoSprite(this);
     this.diagram = new Diagram(this);
   }
   onResize() {

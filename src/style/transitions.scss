@@ -1,0 +1,27 @@
+.slow-fade-enter-active,
+.slow-fade-leave-active {
+  transition: opacity 2s;
+}
+.slow-fade-enter,
+.slow-fade-leave-to {
+  opacity: 0;
+}
+.quick-fade-enter-active,
+.quick-fade-leave-active {
+  transition: opacity 0.2s;
+}
+.quick-fade-enter,
+.quick-fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-leave-active {
+  position: absolute;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}

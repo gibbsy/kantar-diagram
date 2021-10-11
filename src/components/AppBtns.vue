@@ -1,6 +1,8 @@
 <template>
-  <div class="k-app-nav">
-    <button v-for="(btn, i) in navBtns" :key="i" @click.prevent="onClick">{{ btn.label }}</button>
+  <div class="k-dia-app-nav">
+    <button v-for="(btn, i) in navBtns" :key="i" class="k-dia-btn-primary" @click.prevent="onClick">
+      {{ btn.label }}
+    </button>
   </div>
 </template>
 <script>
@@ -13,3 +15,9 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+.k-dia-app-nav {
+  display: flex;
+  gap: 3rem;
+}
+</style>

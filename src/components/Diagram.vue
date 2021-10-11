@@ -9,13 +9,18 @@ export default {
       diagram: undefined,
     };
   },
+  computed: {
+    appData() {
+      return this.$store.state.appData;
+    },
+  },
   mounted() {
     this.initDiagram();
   },
   methods: {
     initDiagram() {
       const el = document.getElementById("k-diagram");
-      this.diagram = new AppGfx(el);
+      this.diagram = new AppGfx(el, this.appData);
     },
   },
 };
@@ -23,8 +28,7 @@ export default {
 <style lang="scss" scoped>
 #k-diagram {
   position: relative;
-  display: block;
-  background: #ccc;
+  display: inline-block;
   width: 40vw;
   height: 40vw;
   canvas {

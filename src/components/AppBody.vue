@@ -1,26 +1,27 @@
 <template>
-  <div class="k-app-view">
-    <h1>Test font</h1>
+  <div class="k-dia-app-view">
     <diagram />
     <app-btns :nav-btns="appData.appBtns" />
+    <transition name="fade" appear>
+      <modal v-if="modalOn" />
+    </transition>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Diagram from "./Diagram.vue";
 import AppBtns from "./AppBtns.vue";
+import Modal from "./Modal.vue";
 
 export default {
   name: "AppBody",
   components: {
     Diagram,
     AppBtns,
+    Modal,
   },
-  computed: {
-    appData() {
-      return this.$store.state.appData;
-    },
-  },
+  computed: mapState(["appData", "modalOn"]),
   mounted() {
     console.log(PIXI);
     console.log(this.appData);
@@ -30,14 +31,4 @@ export default {
 
 <style scoped lang="scss">
 @import "../style/vars.scss";
-h1 {
-  font-family: "KantarBrown";
-  font-weight: 100;
-}
-.view {
-  background: $goldGrad;
-  h1 {
-    color: white;
-  }
-}
 </style>
