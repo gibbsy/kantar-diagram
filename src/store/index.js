@@ -5,43 +5,23 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    appData: {
-      appBtns: [
-        { label: "Application" },
-        { label: "Scale & versatility" },
-        {
-          label: "Connectivity",
-        },
-        {
-          label: "Innovation",
-        },
-      ],
-      mainArcs: [
-        { label: "Streaming data" },
-        { label: "CTV+ sources" },
-        { label: "Operator data" },
-        { label: "CRM systems" },
-        { label: "AdTech" },
-        { label: "Brand data" },
-      ],
-      sections: [
-        { label: "Streaming data", video: "xxxx", title: "Title for the modal streaming data" },
-        { label: "CTV+ sources", video: "xxxx", title: "Title for the modal ctv" },
-        { label: "Operator data", video: "xxxx", title: "Title for the modal operator data" },
-        { label: "CRM systems", video: "xxxx", title: "Title for the modal CRM" },
-        { label: "AdTech", video: "xxxx", title: "Title for the modal adTech" },
-        { label: "Brand data", video: "xxxx", title: "Title for the modal brand" },
-      ],
-    },
+    appData: {},
+    pages: [],
     modalOn: false,
     activeSection: null,
   },
   mutations: {
+    saveAppData(state, payload) {
+      state.appData = payload;
+    },
+    savePages(state, payload) {
+      state.pages = payload;
+    },
     toggleModal(state, val) {
       state.modalOn = val;
     },
-    selectSection(state, val) {
-      state.activeSection = state.appData.sections.filter((section) => section.label === val);
+    selectSection(state, id) {
+      state.activeSection = state.pages.filter((page) => page._id === id);
     },
   },
 });

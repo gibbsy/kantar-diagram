@@ -1,7 +1,7 @@
 <template>
   <div class="k-dia-app-view">
     <diagram />
-    <app-btns :nav-btns="appData.appBtns" />
+    <app-btns :nav-btns="appData.bottomBtns" />
     <transition name="fade" appear>
       <modal v-if="modalOn" />
     </transition>

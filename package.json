@@ -16,6 +16,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@sanity/client": "^2.21.0",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.12",
     "vuex": "^3.6.2"
