@@ -46,6 +46,10 @@ export default {
     width: 50vw;
     height: 50vw;
   }
+  @include bp(1400) {
+    width: 45vw;
+    height: 45vw;
+  }
   @include bp(1800) {
     width: 40vw;
     height: 40vw;
