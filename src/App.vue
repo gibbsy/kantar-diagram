@@ -16,8 +16,8 @@ const query = `
 {
   "appData": *[_type=="diagram" && version=="en"][0]{
   title, fontSize,
-  mainArcs[]->, centreLinkTop->, centreLinkBottom->, 
-  blackRing->, outerLinkLeft->, outerLinkRight->, bottomBtns[]->
+  mainArcs[]->{label, _id}, centreLinkTop->{label, _id}, centreLinkBottom->{label, _id}, 
+  blackRing->{label, _id}, outerLinkLeft->{label, _id}, outerLinkRight->{label, _id}, bottomBtns[]->{label, _id}
 }, 
 "pages": *[_type=="page" && version == "en"]
 }
@@ -40,6 +40,7 @@ export default {
       sanity.fetch(query).then(
         (diagram) => {
           console.log(diagram);
+          diagram.appData.title = diagram.appData.title.replace("\\n", "\n");
           this.$store.commit("saveAppData", diagram.appData);
           this.$store.commit("savePages", diagram.pages);
           this.loading = false;
@@ -103,23 +104,51 @@ export default {
   table,
   fieldset,
   hr {
-    // margin: 0;
+    margin: 0;
     margin-bottom: 1.5rem;
   }
   h1 {
-    font-family: "KantarBrown";
     font-weight: 100;
+    font-size: 2.4rem;
+  }
+  h2 {
+    font-weight: 600;
+    font-size: 1.5rem;
+    @include bp(1400) {
+      font-size: 2rem;
+    }
+    @include bp(1800) {
+      font-size: 2.5rem;
+    }
   }
   .k-dia-heading-thin {
     font-weight: 200;
-    font-size: 2.4rem;
+    font-size: 1.5rem;
     line-height: 1.25;
+    @include bp(1400) {
+      font-size: 2rem;
+    }
+    @include bp(1800) {
+      font-size: 2.5rem;
+    }
   }
-
   p,
   a,
-  li {
-    font-size: 1.125rem;
+  li,
+  button {
+    font-size: 0.75rem;
+    @include bp(500) {
+      font-size: 0.875rem;
+    }
+    @include bp(768) {
+      font-size: 1rem;
+    }
+    @include bp(1400) {
+      font-size: 1.125rem;
+    }
+    @include bp(1800) {
+      font-size: 1.25rem;
+    }
   }
   button {
     border: none;
@@ -128,12 +157,11 @@ export default {
   }
   button.k-dia-btn-primary {
     position: relative;
-    font-size: 1.125rem;
     border: none;
     outline: none;
     background: $darkGrey;
     color: #fff;
-    padding: 1.125rem 2rem;
+    padding: 0.875rem 1rem;
     cursor: pointer;
     overflow: hidden;
     &:before {
@@ -149,6 +177,9 @@ export default {
     }
     &:hover:before {
       transform: translateX(0);
+    }
+    @include bp(768) {
+      padding: 1.125rem 2rem;
     }
   }
   .k-dia-app-view {

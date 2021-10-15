@@ -3,7 +3,7 @@
     <div class="k-dia-modal-content">
       <aside class="k-dia-modal-left-col">
         <div class="k-dia-modal-fixed-aside">
-          <h2 class="k-dia-heading-thin">This is the pullout quote</h2>
+          <h2 class="k-dia-heading-thin">{{ content.pullout }}</h2>
         </div>
       </aside>
       <div class="k-dia-modal-main-col">
@@ -19,44 +19,11 @@
         </div>
         <article class="k-dia-modal-main-article">
           <h2>{{ content.title }}</h2>
-          <div class="k-dia-video-wrapper 16-9" />
+          <div v-if="content.video" class="k-dia-video-wrapper">
+            <vimeo-player :video-url="content.video" :options="{ responsive: true }" />
+          </div>
           <div class="k-dia-modal-text">
-            <p>
-              Data underpins business strategy, but not all data is equal. The opportunities to
-              source data directly from connected devices are expanding the possibilities for
-              audience measurement, but it’s not the devices watching content or ads, it’s people.
-            </p>
-            <p>
-              We provide true people-based measurement - trusted, privacycompliant, and used by the
-              industry to make the most informed decisions about real-world behaviour.
-            </p>
-            <p>
-              The number and the profile of those viewers can vary dramatically, with profound
-              implications for your business.
-            </p>
-            <p>
-              Panels bring big data streams together and make sense of them. They offer a value
-              exchange for planning and trading and to enhance your own first-party data. [4]
-            </p>
-            <p>High-quality, consented panels lie at the heart of our solution</p>
-            <p>
-              Data underpins business strategy, but not all data is equal. The opportunities to
-              source data directly from connected devices are expanding the possibilities for
-              audience measurement, but it’s not the devices watching content or ads, it’s people.
-            </p>
-            <p>
-              We provide true people-based measurement - trusted, privacycompliant, and used by the
-              industry to make the most informed decisions about real-world behaviour.
-            </p>
-            <p>
-              The number and the profile of those viewers can vary dramatically, with profound
-              implications for your business.
-            </p>
-            <p>
-              Panels bring big data streams together and make sense of them. They offer a value
-              exchange for planning and trading and to enhance your own first-party data. [4]
-            </p>
-            <p>High-quality, consented panels lie at the heart of our solution</p>
+            <block-content :blocks="content.textContent" />
             <button class="k-dia-btn-primary">Discover more</button>
           </div>
         </article>
@@ -65,12 +32,11 @@
   </div>
 </template>
 <script>
-// import bus from "../"
-// import { mapState } from "vuex";
+import { vueVimeoPlayer } from "vue-vimeo-player";
 export default {
-  /*  computed: mapState({
-    content: "activeSection",
-  }), */
+  components: {
+    VimeoPlayer: vueVimeoPlayer,
+  },
   computed: {
     content() {
       return this.$store.state.activeSection[0];
@@ -86,6 +52,7 @@ export default {
 <style lang="scss" scoped>
 @import "../style/vars.scss";
 @import "../style/_mixins-utils.scss";
+
 .k-dia {
   &-modal-container {
     position: fixed;
@@ -97,20 +64,39 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    padding: 0;
   }
   &-modal-content {
     position: relative;
     display: block;
-    width: 60vw;
-    height: 70vh;
+    width: 100%;
+    height: 100%;
     overflow: scroll;
     background-color: #fff;
     display: flex;
+    flex-direction: column-reverse;
+    @include bp(1024) {
+      width: 90%;
+      height: 80vh;
+      flex-direction: row;
+    }
+    @include bp(1400) {
+      width: 70%;
+      max-width: 1600px;
+      height: 80vh;
+    }
+    @include bp(1800) {
+      width: 60%;
+    }
   }
   &-modal-main-col {
     // flex-basis: 70%;
     position: relative;
-    padding: 4rem 2rem 2rem 1rem;
+    padding: 1rem;
+    @include bp(1200) {
+      padding: 4rem 2rem 2rem 1rem;
+    }
     @include bp(1600) {
       padding: 6rem 2rem 1rem 1rem;
     }
@@ -118,59 +104,88 @@ export default {
   &-modal-left-col {
     position: relative;
     display: block;
+    width: 100%;
+    height: auto;
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: auto;
-    height: 100%;
-    width: 24vw;
     background: $beige;
-    background-attachment: fixed;
+    @include bp(1024) {
+      width: 24vw;
+      height: 100%;
+      background-attachment: fixed;
+    }
   }
   &-modal-fixed-aside {
-    position: fixed;
-    width: inherit;
-    height: 70vh;
+    position: relative;
+    width: 100%;
     background-color: $beige;
-    padding: 4rem 2rem 2rem 1rem;
+    padding: 2rem;
+    @include bp(1024) {
+      padding: 2rem 1rem 1rem 1rem;
+      position: fixed;
+      width: inherit;
+      height: 80vh;
+    }
+    @include bp(1200) {
+      padding: 4rem 2rem 2rem 1rem;
+    }
     @include bp(1600) {
       padding: 6rem 2rem 1rem 3rem;
     }
     &:before {
       content: "";
       position: absolute;
-      width: 0.5rem;
+      width: 0.25rem;
       height: 100%;
       top: 0;
       left: 0;
       background: $goldGrad;
+      @include bp(1024) {
+        width: 0.5rem;
+      }
     }
   }
   &-modal-close-btn-container {
     position: absolute;
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
     top: 1.5rem;
     right: 1.5rem;
+    @include bp(1200) {
+      width: 3rem;
+      height: 3rem;
+    }
   }
   &-modal-close-btn {
-    position: fixed;
+    position: relative;
     display: inline-block;
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     background: none;
+    @include bp(1024) {
+      position: fixed;
+    }
+    @include bp(1200) {
+      width: 3rem;
+      height: 3rem;
+    }
     span {
       position: absolute;
+      width: 2rem;
+      height: 2px;
       left: 0;
       margin: 0;
       display: inline-block;
-      width: 3rem;
-      height: 2px;
       background: #000;
       border-radius: 1px;
       z-index: 21;
       transform-origin: 50% 50%;
       transform: rotate(45deg);
+      @include bp(1200) {
+        width: 3rem;
+      }
 
       &:last-child {
         transform: rotate(-45deg);
@@ -178,7 +193,35 @@ export default {
     }
   }
   &-modal-main-article {
-    padding: 0 4rem 4rem 0;
+    @include bp(1024) {
+      padding: 0 4rem 4rem 0;
+    }
+  }
+  &-video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    #vimeo-player-1 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      & iframe,
+      & object,
+      & embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 }
 </style>

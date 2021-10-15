@@ -36,8 +36,6 @@ export default class AppGfx extends PIXI.Application {
     this.resizing = false;
     this.diagram = undefined;
     this.events = bus;
-    // this.stage = new PIXI.display.Stage();
-    // this.init();
     this.load(() => {
       this.init();
     });
@@ -48,7 +46,6 @@ export default class AppGfx extends PIXI.Application {
   load(callback) {
     this.loader.add(manifest).load(() => {
       callback();
-      this.init();
     });
     this.loader.onProgress.add((e) => {
       bus.emit("LOAD_PROGRESS", e.progress);

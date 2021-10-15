@@ -3,38 +3,32 @@ import store from "../store/index.js";
 export default class Diagram extends PIXI.Container {
   constructor(app) {
     super();
-    const { stage, view, resources, events, appData, fontSize } = app;
-    this.showRulers = false;
+    const { stage, view, resources, events, appData } = app;
     this.ready = false;
-    this.arcs = [];
-    events.on("WINDOW_RESIZE", () => {
-      if (this.onStage) {
-        if (this.showRulers) {
-          this.drawRulers();
-        }
-        this.positionGraphics();
-      }
-    });
-    Object.assign(this, { app, stage, view, resources, events, appData, fontSize });
+    this.resizing = false;
+    // ref to every el with events
+    this.castMembers = [];
+    this.aniEls = {};
+    Object.assign(this, { app, stage, view, resources, events, appData });
     this.textOpts = {
       fontFamily: "KantarBrown",
       fontWeight: "400",
       align: "center",
-      fontSize: fontSize | 20,
+      fontSize: appData.fontSize | 20,
       fill: 0xffffff,
     };
-    this.init();
+    events.on("WINDOW_RESIZE", () => {
+      this.onResize();
+    });
+    this.initDiagram();
   }
-  init() {
-    if (this.showRulers) {
-      this.drawRulers();
-    }
+  initDiagram() {
     this.initVideo().then(() => {
+      this.setFontSize();
       this.drawGraphics();
       this.ready = true;
       this.enter();
     });
-    // console.log("SCENE READY");
   }
   sceneBounds() {
     // Calculate the bounds of the central hexagon
@@ -55,18 +49,30 @@ export default class Diagram extends PIXI.Container {
       smallScreen,
     };
   }
-  drawRulers() {
-    let { vw, vh, cx, cy } = this.sceneBounds();
-    if (!this.rulers) {
-      this.rulers = new PIXI.Graphics();
-    } else {
-      this.rulers.clear();
-    }
-    this.rulers.lineStyle(2, 0x00ff99, 0.5);
-    this.rulers.moveTo(0, cy).lineTo(vw, cy).moveTo(cx, 0).lineTo(cx, vh);
-    this.addChild(this.rulers);
-  }
+  setFontSize() {
+    const { vw } = this.sceneBounds();
+    console.log(vw);
+    let baseSize = this.appData.fontSize;
+    let fontSize;
 
+    if (vw > 1300) {
+      fontSize = baseSize * 1.5;
+    } else if (vw > 1100) {
+      fontSize = baseSize * 1.25;
+    } else if (vw > 900) {
+      fontSize = baseSize * 1.125;
+    } else if (vw > 800) {
+      fontSize = baseSize;
+    } else if (vw > 700) {
+      fontSize = baseSize;
+    } else if (vw > 500) {
+      fontSize = baseSize * 0.75;
+    } else {
+      fontSize = baseSize * 0.625;
+    }
+    console.log(fontSize);
+    this.textOpts.fontSize = fontSize;
+  }
   initVideo() {
     const { vw, /* vh,*/ cx, cy } = this.sceneBounds();
 
@@ -99,16 +105,8 @@ export default class Diagram extends PIXI.Container {
             vidRes.source.play();
           });
           vidRes.source.play();
-          console.log(vidRes);
           this.addChild(video);
-          video.on("mouseover", () => {
-            vidRes.source.play();
-            // video.texture.baseTexture.resource.source.pause();
-          });
-          video.on("mouseout", () => {
-            vidRes.source.play();
-            // video.texture.baseTexture.resource.source.pause();
-          });
+          this.castMembers.push(video, vidTex);
           resolve();
         })
         .catch((err) => {
@@ -134,7 +132,6 @@ export default class Diagram extends PIXI.Container {
         arc = this.drawArc(arcData.label, false, arcData._id);
       }
       arc.angle = i * 60 + 30;
-      this.arcs[i] = arc;
       if (i < 3) {
         this.rightArcs.addChild(arc);
       } else {
@@ -189,16 +186,16 @@ export default class Diagram extends PIXI.Container {
     );
 
     ringContainer.on("pointerdown", () => {
-      store.commit("toggleModal", true);
-      store.commit("selectSection", appData.blackRing._id);
+      this.clickHandler(appData.blackRing._id);
     });
     this.addChild(ringContainer);
+    this.castMembers.push(ringContainer);
 
     //gold ring
 
-    let goldRing = new PIXI.Graphics().lineStyle(6, 0x000000).drawCircle(cx, cy, vw / 3.75);
+    const goldRing = new PIXI.Graphics().lineStyle(6, 0x000000).drawCircle(cx, cy, vw / 3.75);
 
-    let ringTex = new PIXI.Sprite(app.resources.grad_tex.texture);
+    const ringTex = new PIXI.Sprite(app.resources.grad_tex.texture);
     ringTex.anchor.set(0.5);
     ringTex.position.x = cx;
     ringTex.position.y = cy;
@@ -207,11 +204,12 @@ export default class Diagram extends PIXI.Container {
     ringTex.height = vw;
     ringTex.mask = goldRing;
     this.addChild(goldRing, ringTex);
+    this.castMembers.push(goldRing, ringTex);
 
     const centreCirc = new PIXI.Graphics().beginFill(0x121212).drawCircle(cx, cx, vw / 3.75 - 3);
     centreCirc.alpha = 0.5;
-
-    let mainTitle = new PIXI.Text(appData.title, {
+    let str = appData.title;
+    const mainTitle = new PIXI.Text(str, {
       ...this.textOpts,
       fontSize: this.textOpts.fontSize * 1.375,
     });
@@ -221,20 +219,27 @@ export default class Diagram extends PIXI.Container {
     mainTitle.style.trim = true;
     mainTitle.updateText();
 
-    let innerLinkTop = this.linkUnderline(appData.centreLinkTop.label);
+    const innerLinkTop = this.linkUnderline(appData.centreLinkTop.label);
     innerLinkTop.position.set(cx, cy - vw / 3.75 / 2);
-    let innerLinkBottom = this.linkUnderline(appData.centreLinkBottom.label);
+    const innerLinkBottom = this.linkUnderline(appData.centreLinkBottom.label);
     innerLinkBottom.position.set(cx, cy + vw / 3.75 / 2);
+    innerLinkTop.on("pointerdown", () => {
+      this.clickHandler(appData.centreLinkTop._id);
+    });
+    innerLinkBottom.on("pointerdown", () => {
+      this.clickHandler(appData.centreLinkBottom._id);
+    });
 
     this.addChild(centreCirc, mainTitle, innerLinkTop, innerLinkBottom);
+    this.castMembers.push(centreCirc, mainTitle, innerLinkTop, innerLinkBottom);
 
     this.drawOuterShape();
 
     //  outer labels
 
     let labelRad = this.getBounds().width / 2 + textOpts.fontSize / 2;
-    let outerLabelContainer1 = new PIXI.Container();
-    let outerLabel1 = this.arcText(
+    const outerLabelContainerRight = new PIXI.Container();
+    let outerLabelRight = this.arcText(
       labelRad,
       appData.outerLinkRight.label,
       textOpts.fontSize,
@@ -242,21 +247,23 @@ export default class Diagram extends PIXI.Container {
       false,
       0xffffff
     );
-    outerLabelContainer1.position.set(cx + labelRad, cy);
-    outerLabelContainer1.angle = 90;
-    outerLabelContainer1.addChild(outerLabel1.bgSprite, outerLabel1.tSprite);
-    outerLabelContainer1.interactive = true;
-    outerLabelContainer1.buttonMode = true;
-    this.addChild(outerLabelContainer1);
-    outerLabelContainer1.on("mouseover", () => {
-      outerLabel1.tSprite.tint = 0x000000;
+    outerLabelContainerRight.position.set(cx + labelRad, cy);
+    outerLabelContainerRight.angle = 90;
+    outerLabelContainerRight.addChild(outerLabelRight.bgSprite, outerLabelRight.tSprite);
+    outerLabelContainerRight.interactive = true;
+    outerLabelContainerRight.buttonMode = true;
+    this.addChild(outerLabelContainerRight);
+    outerLabelContainerRight.on("mouseover", () => {
+      outerLabelRight.tSprite.tint = 0x000000;
     });
-    outerLabelContainer1.on("mouseout", () => {
-      outerLabel1.tSprite.tint = 0xffffff;
+    outerLabelContainerRight.on("mouseout", () => {
+      outerLabelRight.tSprite.tint = 0xffffff;
     });
-
-    let outerLabelContainer2 = new PIXI.Container();
-    let outerLabel2 = this.arcText(
+    outerLabelContainerRight.on("pointerdown", () => {
+      this.clickHandler(appData.outerLinkRight._id);
+    });
+    let outerLabelContainerLeft = new PIXI.Container();
+    let outerLabelLeft = this.arcText(
       labelRad,
       appData.outerLinkLeft.label,
       textOpts.fontSize,
@@ -264,19 +271,22 @@ export default class Diagram extends PIXI.Container {
       false,
       0xffffff
     );
-    outerLabelContainer2.position.set(cx - labelRad, cy);
-    outerLabelContainer2.angle = -90;
-    outerLabelContainer2.addChild(outerLabel2.bgSprite, outerLabel2.tSprite);
-    outerLabelContainer2.interactive = true;
-    outerLabelContainer2.buttonMode = true;
-    this.addChild(outerLabelContainer2);
-    outerLabelContainer2.on("mouseover", () => {
-      outerLabel2.tSprite.tint = 0x000000;
+    outerLabelContainerLeft.position.set(cx - labelRad, cy);
+    outerLabelContainerLeft.angle = -90;
+    outerLabelContainerLeft.addChild(outerLabelLeft.bgSprite, outerLabelLeft.tSprite);
+    outerLabelContainerLeft.interactive = true;
+    outerLabelContainerLeft.buttonMode = true;
+    this.addChild(outerLabelContainerLeft);
+    outerLabelContainerLeft.on("mouseover", () => {
+      outerLabelLeft.tSprite.tint = 0x000000;
     });
-    outerLabelContainer2.on("mouseout", () => {
-      outerLabel2.tSprite.tint = 0xffffff;
+    outerLabelContainerLeft.on("mouseout", () => {
+      outerLabelLeft.tSprite.tint = 0xffffff;
     });
-
+    outerLabelContainerLeft.on("pointerdown", () => {
+      this.clickHandler(appData.outerLinkLeft._id);
+    });
+    this.castMembers.push(outerLabelContainerLeft, outerLabelContainerRight);
     app.stage.addChild(this);
   }
   linkUnderline(linkTxt) {
@@ -353,16 +363,13 @@ export default class Diagram extends PIXI.Container {
       gsap.to(arcHover, { alpha: 0, duration: 0.3, ease: "power2.out" });
       label.tint = 0xffffff;
     });
-    arc.on("pointerdown", () => {
-      console.log(labelTxt);
-      store.commit("toggleModal", true);
-      store.commit("selectSection", pageId);
-    });
+    let onClick = this.clickHandler.bind(this, pageId);
+    arc.on("pointerdown", onClick);
     const { fontSize } = textOpts;
     let label = this.arcText(rad, labelTxt, fontSize, 0xffffff, flipTxt);
     label.position.y = -rad - fontSize / 2;
     arc.addChild(label);
-
+    this.castMembers.push(arc);
     return arc;
   }
   arcText(radius, label, fontSize, fill, flipY, bgFill) {
@@ -472,8 +479,11 @@ export default class Diagram extends PIXI.Container {
     tex.mask = gfx;
     this.addChild(gfx, tex);
   }
-  positionGraphics() {}
   onResize(data) {
+    const { stage } = this;
+    if (this.resizing == true) {
+      return;
+    }
     /*   let { app, sprite, container, tl_main } = this;
       tl_main.kill();
       tl_main = this.tl_main = null;
@@ -482,6 +492,30 @@ export default class Diagram extends PIXI.Container {
       sprite.scale.x = 1;
       sprite.scale.y = 1;
       this.buildTimeline(); */
+    console.log("resize");
+    this.resizing = true;
+    this.destroyCast();
+    this.removeChildren();
+    stage.removeChild(this);
+    this.onStage = false;
+    this.initVideo().then(() => {
+      this.setFontSize();
+      this.drawGraphics();
+      this.resizing = false;
+      this.enter();
+    });
+  }
+  clickHandler(id) {
+    store.commit("selectSection", id);
+    store.commit("toggleModal", true);
+  }
+
+  destroyCast() {
+    this.castMembers.forEach((member) => member.destroy());
+    this.castMembers = [];
+  }
+  buildTl() {
+    const { stage } = this;
   }
   enter() {
     const { stage } = this;
@@ -489,27 +523,9 @@ export default class Diagram extends PIXI.Container {
       return;
     }
     this.onStage = true;
-    this.positionGraphics();
     stage.addChild(this);
     if (this.tl_enter) {
       this.tl_enter.restart();
-    }
-  }
-  leave() {
-    const { stage } = this;
-    if (!this.onStage) {
-      return;
-    }
-    if (this.tl_enter) {
-      this.tl_enter.seek("start");
-      this.onStage = false;
-      stage.removeChild(this);
-    }
-    if (this.tl_leave) {
-      this.tl_leave.play();
-    } else {
-      this.onStage = false;
-      stage.removeChild(this);
     }
   }
 }
