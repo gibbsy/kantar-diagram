@@ -87,6 +87,9 @@ export default class AppGfx extends PIXI.Application {
     return { vw, vh, cx, cy };
   }
   userAction(e) {}
+  enter() {
+    this.diagram.enter();
+  }
   animate(delta) {
     this.events.emit("animate", delta);
   }

@@ -3,10 +3,13 @@
 </template>
 <script>
 import AppGfx from "../graphics/AppGfx.js";
+import bus from "../graphics/eventBus.js";
 export default {
   data() {
     return {
       diagram: undefined,
+      diagramReady: false,
+      diagramInview: false,
     };
   },
   computed: {
@@ -14,13 +17,39 @@ export default {
       return this.$store.state.appData;
     },
   },
+  watch: {
+    diagramReady(val) {
+      if (val === true && this.diagramInview === true) {
+        this.diagram.enter();
+      }
+    },
+    diagramInview(val) {
+      if (val === true && this.diagramReady === true) {
+        this.diagram.enter();
+      }
+    },
+  },
   mounted() {
     this.initDiagram();
+    bus.on("DIAGRAM_READY", () => {
+      this.diagramReady = true;
+      ScrollTrigger.create({
+        trigger: "#k-diagram",
+        start: "top center",
+        toggleClass: "is-inview",
+        once: true,
+        onToggle: () => (this.diagramInview = true),
+      });
+    });
   },
   methods: {
     initDiagram() {
       const el = document.getElementById("k-diagram");
       this.diagram = new AppGfx(el, this.appData);
+    },
+    diagramEnter() {
+      console.log("ENTER");
+      this.diagram.enter();
     },
   },
 };

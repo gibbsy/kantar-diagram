@@ -20,6 +20,7 @@ plugins:
 globals:
   PIXI: readonly
   gsap: readonly
+  ScrollTrigger: readonly
 rules:
   no-console: 0
   no-process-env: 0

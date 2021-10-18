@@ -3,7 +3,7 @@
     <button
       v-for="(btn, i) in navBtns"
       :key="i"
-      class="k-dia-btn-primary"
+      :class="['k-dia-btn-primary', { active: diagramOn }]"
       @click.prevent="btnHandler(btn._id)"
     >
       {{ btn.label }}
@@ -11,12 +11,24 @@
   </div>
 </template>
 <script>
+import bus from "../graphics/eventBus.js";
 export default {
   props: {
     navBtns: {
       type: Array,
       default: () => [],
     },
+  },
+  data() {
+    return {
+      diagramOn: false,
+    };
+  },
+  created() {
+    bus.on("DIAGRAM_ANI_DONE", () => {
+      console.log("ani done");
+      this.diagramOn = true;
+    });
   },
   methods: {
     btnHandler(id) {
@@ -32,6 +44,15 @@ export default {
 @import "../style/vars.scss";
 @import "../style/_mixins-utils.scss";
 
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .k-dia-app-nav {
   display: flex;
   flex-wrap: wrap;
@@ -45,6 +66,13 @@ export default {
   }
   @include bp(1400) {
     gap: 3rem;
+  }
+  .k-dia-btn-primary {
+    opacity: 0;
+    &.active {
+      animation: fadein 1s ease forwards;
+      @include stagger-children(animation, 4, 0, 0.1);
+    }
   }
 }
 </style>
