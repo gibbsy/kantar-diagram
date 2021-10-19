@@ -1,5 +1,5 @@
 <template>
-  <div class="k-dia-container">
+  <div :class="['k-dia-container', { standalone: isStandalone }]">
     <app-body v-if="loading == false" />
     <div v-if="error !== null">
       <p>Sorry, something went wrong.</p>
@@ -11,6 +11,7 @@
 <script>
 import AppBody from "./components/AppBody.vue";
 import sanity from "./client.js";
+import config from "./config.js";
 
 const query = `
 {
@@ -30,10 +31,12 @@ export default {
     return {
       loading: true,
       error: null,
+      isStandalone: config.standalone,
     };
   },
   created() {
     this.fetchData();
+    console.log(this.isStandalone);
   },
   methods: {
     fetchData() {
@@ -177,6 +180,9 @@ export default {
     width: 100%;
     max-width: 1440px;
     padding: 2rem;
+  }
+  &.standalone .k-dia-app-view {
+    padding: 0;
   }
 }
 </style>
