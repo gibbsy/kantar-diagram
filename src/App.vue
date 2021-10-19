@@ -1,9 +1,19 @@
 <template>
   <div :class="['k-dia-container', { standalone: isStandalone }, lang.toString()]">
+    <header v-if="isStandalone" id="k-demo-page-header">
+      <div class="k-dia-demo-logo">
+        <svg viewBox="0 0 149 28" role="img">
+          <use xlink:href="/static/assets/sprite.svg#kantar-logo" />
+        </svg>
+      </div>
+    </header>
     <app-body v-if="loading == false" />
     <div v-if="error !== null">
       <p>Sorry, we couldn't load the data.</p>
     </div>
+    <footer v-if="isStandalone">
+      <p id="k-dia-copyright">© Kantar Group and Affiliates 2021</p>
+    </footer>
   </div>
 </template>
 
@@ -80,6 +90,7 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 
@@ -187,6 +198,70 @@ export default {
     width: 100%;
     max-width: 1440px;
     padding: 0 2rem;
+  }
+
+  #k-demo-content {
+    position: relative;
+    width: 100%;
+    padding-bottom: 10vh;
+  }
+  #k-demo-page-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .k-dia-demo-logo {
+    position: relative;
+    width: 100px;
+    padding-top: 20px;
+    display: inline-block;
+    /* margin-top: auto; */
+  }
+
+  footer {
+    width: 100%;
+    font-weight: 200;
+    display: flex;
+    margin-top: 1rem;
+    justify-content: flex-end;
+    padding: 0 20px;
+
+    p {
+      font-size: 1.4rem;
+    }
+    @include bp(768) {
+      margin-top: 2rem;
+      padding: 0 40px;
+    }
+    @include bp(1080) {
+      margin-top: 3rem;
+      padding: 0 60px;
+    }
+  }
+  .k-dia-demo-logo svg {
+    width: 100%;
+    fill: #000;
+  }
+
+  @media screen and (min-width: 768px) {
+    #k-demo-page-header {
+      padding: 0 40px;
+    }
+    .k-dia-demo-logo {
+      width: 120px;
+      padding-top: 30px;
+    }
+  }
+  @media screen and (min-width: 1080px) {
+    #k-demo-page-header {
+      padding: 0 60px;
+    }
+    .k-dia-demo-logo {
+      width: 140px;
+      padding-top: 30px;
+    }
   }
 }
 </style>
