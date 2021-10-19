@@ -9,6 +9,8 @@ const store = new Vuex.Store({
     pages: [],
     modalOn: false,
     activeSection: null,
+    isStandalone: undefined,
+    lang: "",
   },
   mutations: {
     saveAppData(state, payload) {
@@ -22,6 +24,12 @@ const store = new Vuex.Store({
     },
     selectSection(state, id) {
       state.activeSection = state.pages.filter((page) => page._id === id);
+    },
+    setStandalone(state, val) {
+      state.isStandalone = val;
+    },
+    setLang(state, val) {
+      state.lang = val;
     },
   },
 });

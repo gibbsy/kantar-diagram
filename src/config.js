@@ -1,4 +1,4 @@
 export default {
   lang: "en",
-  standalone: true,
+  standalone: false,
 };

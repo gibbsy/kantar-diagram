@@ -43,7 +43,9 @@ footer {
 }
 
 @media screen and (min-width: 768px) {
-  #k-demo-page-header,
+  #k-demo-page-header {
+    padding: 0 40px;
+  }
   footer {
     padding: 0 40px;
     margin-top: 2rem;
@@ -54,13 +56,15 @@ footer {
   }
 }
 @media screen and (min-width: 1080px) {
-  #k-demo-page-header,
+  #k-demo-page-header {
+    padding: 0 60px;
+  }
   footer {
     padding: 0 60px;
     margin-top: 3rem;
   }
   .k-dia-demo-logo {
     width: 140px;
-    padding-top: 40px;
+    padding-top: 30px;
   }
 }

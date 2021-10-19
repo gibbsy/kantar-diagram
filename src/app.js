@@ -10,4 +10,4 @@ const app = new Vue({
   store,
 });
 
-app.$mount("#app");
+app.$mount("#k-diagram-app");

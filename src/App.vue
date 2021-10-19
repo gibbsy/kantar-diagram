@@ -1,9 +1,8 @@
 <template>
-  <div :class="['k-dia-container', { standalone: isStandalone }]">
+  <div :class="['k-dia-container', { standalone: isStandalone }, lang.toString()]">
     <app-body v-if="loading == false" />
     <div v-if="error !== null">
-      <p>Sorry, something went wrong.</p>
-      <p>{{ error }}</p>
+      <p>Sorry, we couldn't load the data.</p>
     </div>
   </div>
 </template>
@@ -15,12 +14,12 @@ import config from "./config.js";
 
 const query = `
 {
-  "appData": *[_type=="diagram" && version=="en"][0]{
+  "appData": *[_type=="diagram" && version=="${config.lang}"][0]{
   title, fontSize,
   mainArcs[]->{label, _id}, centreLinkTop->{label, _id}, centreLinkBottom->{label, _id}, 
   blackRing->{label, _id}, outerLinkLeft->{label, _id}, outerLinkRight->{label, _id}, bottomBtns[]->{label, _id}
 }, 
-"pages": *[_type=="page" && version == "en"]
+"pages": *[_type=="page" && version == "${config.lang}"]
 }
 `;
 
@@ -31,12 +30,20 @@ export default {
     return {
       loading: true,
       error: null,
-      isStandalone: config.standalone,
     };
+  },
+  computed: {
+    isStandalone() {
+      return this.$store.state.isStandalone;
+    },
+    lang() {
+      return this.$store.state.lang;
+    },
   },
   created() {
     this.fetchData();
-    console.log(this.isStandalone);
+    this.$store.commit("setStandalone", config.standalone);
+    this.$store.commit("setLang", config.lang);
   },
   methods: {
     fetchData() {
@@ -179,9 +186,6 @@ export default {
     align-items: center;
     width: 100%;
     max-width: 1440px;
-    padding: 2rem;
-  }
-  &.standalone .k-dia-app-view {
     padding: 0 2rem;
   }
 }

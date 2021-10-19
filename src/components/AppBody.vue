@@ -1,7 +1,7 @@
 <template>
   <div class="k-dia-app-view">
     <diagram />
-    <app-btns :nav-btns="appData.bottomBtns" />
+    <app-btns v-if="!isStandalone" :nav-btns="appData.bottomBtns" />
     <transition name="fade" appear>
       <modal v-if="modalOn" />
     </transition>
@@ -21,7 +21,7 @@ export default {
     AppBtns,
     Modal,
   },
-  computed: mapState(["appData", "modalOn"]),
+  computed: mapState(["appData", "modalOn", "isStandalone"]),
   mounted() {
     console.log(PIXI);
     console.log(this.appData);
