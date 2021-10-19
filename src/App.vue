@@ -182,7 +182,7 @@ export default {
     padding: 2rem;
   }
   &.standalone .k-dia-app-view {
-    padding: 0;
+    padding: 0 2rem;
   }
 }
 </style>
