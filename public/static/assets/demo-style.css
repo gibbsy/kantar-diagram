@@ -34,7 +34,7 @@ footer {
   font-weight: 200;
   display: flex;
   padding: 0 40px;
-  margin-top: 3rem;
+  margin-top: 1rem;
   justify-content: flex-end;
 }
 .k-dia-demo-logo svg {
@@ -46,6 +46,7 @@ footer {
   #k-demo-page-header,
   footer {
     padding: 0 40px;
+    margin-top: 2rem;
   }
   .k-dia-demo-logo {
     width: 120px;
@@ -56,6 +57,7 @@ footer {
   #k-demo-page-header,
   footer {
     padding: 0 60px;
+    margin-top: 3rem;
   }
   .k-dia-demo-logo {
     width: 140px;
