@@ -105,7 +105,7 @@ export default {
   }
   .k-dia-modal-main-title {
     font-size: 2rem;
-    line-height: 1.5;
+    line-height: 1.25;
     @include bp(720) {
       font-size: 2.4rem;
     }
@@ -115,7 +115,7 @@ export default {
   }
   .k-dia-heading-thin {
     font-size: 1.8rem;
-    line-height: 1.5;
+    line-height: 1.25;
     font-weight: 100;
     @include bp(720) {
       font-size: 2.2rem;

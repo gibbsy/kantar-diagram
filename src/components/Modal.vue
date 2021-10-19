@@ -106,9 +106,9 @@ export default {
   &-modal-main-col {
     // flex-basis: 70%;
     position: relative;
-    padding: 1.6rem;
+    padding: 2rem;
     @include bp(1200) {
-      padding: 6rem 3rem 3rem 1.6rem;
+      padding: 6rem 3rem 3rem 2rem;
     }
     @include bp(1600) {
       padding: 8rem 3rem 3rem 2rem;
