@@ -18,13 +18,13 @@
           </button>
         </div>
         <article class="k-dia-modal-main-article">
-          <h2>{{ content.title }}</h2>
+          <h2 class="k-dia-modal-main-title">{{ content.title }}</h2>
           <div v-if="content.video" class="k-dia-video-wrapper">
             <vimeo-player :video-url="content.video" :options="{ responsive: true }" />
           </div>
           <div class="k-dia-modal-text">
             <block-content :blocks="content.textContent" />
-            <button class="k-dia-btn-primary">Discover more</button>
+            <button class="k-dia-btn-primary">{{ content.mainCta.title }}</button>
           </div>
         </article>
       </div>
@@ -93,12 +93,12 @@ export default {
   &-modal-main-col {
     // flex-basis: 70%;
     position: relative;
-    padding: 1rem;
+    padding: 1.6rem;
     @include bp(1200) {
-      padding: 4rem 2rem 2rem 1rem;
+      padding: 6rem 3rem 3rem 1.6rem;
     }
     @include bp(1600) {
-      padding: 6rem 2rem 1rem 1rem;
+      padding: 8rem 3rem 3rem 2rem;
     }
   }
   &-modal-left-col {
@@ -122,16 +122,16 @@ export default {
     background-color: $beige;
     padding: 2rem;
     @include bp(1024) {
-      padding: 2rem 1rem 1rem 1rem;
+      padding: 3rem 1.6rem 1.6rem 1.6rem;
       position: fixed;
       width: inherit;
       height: 80vh;
     }
     @include bp(1200) {
-      padding: 4rem 2rem 2rem 1rem;
+      padding: 6rem 2rem 3rem 3rem;
     }
     @include bp(1600) {
-      padding: 6rem 2rem 1rem 3rem;
+      padding: 8rem 2rem 3rem 3rem;
     }
     &:before {
       content: "";

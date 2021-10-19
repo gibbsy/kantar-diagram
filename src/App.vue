@@ -62,13 +62,16 @@ export default {
 
 .k-dia-container {
   font-family: "KantarBrown", sans-serif;
-  font-weight: 400;
+  font-weight: 200;
   font-style: normal;
   color: #000;
-  font-size: 16px;
+  font-size: 1.6rem;
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   *,
   *:before,
@@ -76,17 +79,9 @@ export default {
     box-sizing: border-box;
   }
 
-  @include bp(1920) {
-    font-size: 112.5%;
+  @include bp(1080) {
+    font-size: 1.8rem;
   }
-  @include bp(2500) {
-    font-size: 125%;
-  }
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   h1,
   h2,
@@ -106,48 +101,37 @@ export default {
   hr {
     margin: 0;
     margin-bottom: 1.5rem;
+    font-weight: inherit;
   }
-  h1 {
-    font-weight: 100;
-    font-size: 2.4rem;
-  }
-  h2 {
-    font-weight: 600;
-    font-size: 1.5rem;
-    @include bp(1400) {
-      font-size: 2rem;
+  .k-dia-modal-main-title {
+    font-size: 2rem;
+    line-height: 1.5;
+    @include bp(720) {
+      font-size: 2.4rem;
     }
-    @include bp(1800) {
-      font-size: 2.5rem;
+    @include bp(1080) {
+      font-size: 3rem;
     }
   }
   .k-dia-heading-thin {
-    font-weight: 200;
-    font-size: 1.5rem;
-    line-height: 1.25;
-    @include bp(1400) {
-      font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.5;
+    font-weight: 100;
+    @include bp(720) {
+      font-size: 2.2rem;
+      line-height: 3.2rem;
     }
-    @include bp(1800) {
-      font-size: 2.5rem;
+    @include bp(1080) {
+      font-size: 2.8rem;
+      line-height: 4.2rem;
     }
   }
   p,
   a,
-  li,
-  button {
-    font-size: 0.75rem;
-    @include bp(500) {
-      font-size: 0.875rem;
-    }
-    @include bp(768) {
-      font-size: 1rem;
-    }
-    @include bp(1400) {
-      font-size: 1.125rem;
-    }
-    @include bp(1800) {
-      font-size: 1.25rem;
+  li {
+    font-size: 1.6rem;
+    @include bp(1080) {
+      font-size: 1.8rem;
     }
   }
   button {
@@ -161,13 +145,16 @@ export default {
     outline: none;
     background: $darkGrey;
     color: #fff;
-    padding: 0.875rem 1rem;
+    padding: 1.8rem 4rem;
+    font-size: 1.6rem;
     cursor: pointer;
     overflow: hidden;
+    font-weight: 400;
+    margin: 1rem 0;
     &:before {
       content: "";
       position: absolute;
-      width: 0.5rem;
+      width: 0.8rem;
       height: 100%;
       left: 0;
       top: 0;
@@ -178,16 +165,13 @@ export default {
     &:hover:before {
       transform: translateX(0);
     }
-    @include bp(768) {
-      padding: 1.125rem 2rem;
-    }
   }
   .k-dia-app-view {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 1280px;
+    max-width: 1440px;
   }
 }
 </style>

@@ -1,3 +1,10 @@
+html {
+  font-family: KantarBrown, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 62.5%;
+  font-weight: 200;
+  letter-spacing: 0.3px;
+}
+
 #k-demo-content {
   position: relative;
   width: 100%;
