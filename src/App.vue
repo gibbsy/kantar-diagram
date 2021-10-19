@@ -151,6 +151,7 @@ export default {
     overflow: hidden;
     font-weight: 400;
     margin: 1rem 0;
+    width: 100%;
     &:before {
       content: "";
       position: absolute;
@@ -172,6 +173,10 @@ export default {
     align-items: center;
     width: 100%;
     max-width: 1440px;
+    padding: 2rem;
+    @include bp(768) {
+      width: auto;
+    }
   }
 }
 </style>

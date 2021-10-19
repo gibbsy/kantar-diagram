@@ -1,6 +1,6 @@
 <template>
   <div class="k-dia-modal-container">
-    <div class="k-dia-modal-content">
+    <div ref="content" class="k-dia-modal-content">
       <aside class="k-dia-modal-left-col">
         <div class="k-dia-modal-fixed-aside">
           <h2 class="k-dia-heading-thin">{{ content.pullout }}</h2>
@@ -41,6 +41,10 @@ export default {
     content() {
       return this.$store.state.activeSection[0];
     },
+  },
+  mounted() {
+    console.log("overlay mounted");
+    this.$refs["content"].scrollTop = 0;
   },
   methods: {
     closeModal() {
@@ -147,33 +151,39 @@ export default {
     }
   }
   &-modal-close-btn-container {
-    position: absolute;
-    width: 2rem;
-    height: 2rem;
-    top: 1.5rem;
-    right: 1.5rem;
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    margin-left: auto;
+    margin-bottom: 8px;
+    @include bp(1024) {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      margin: 0;
+    }
     @include bp(1200) {
-      width: 3rem;
-      height: 3rem;
+      width: 4rem;
+      height: 4rem;
     }
   }
   &-modal-close-btn {
     position: relative;
     display: inline-block;
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
     background: none;
     @include bp(1024) {
       position: fixed;
     }
     @include bp(1200) {
-      width: 3rem;
-      height: 3rem;
+      width: 4rem;
+      height: 4rem;
     }
     span {
       position: absolute;
-      width: 2rem;
+      width: 3rem;
       height: 2px;
       left: 0;
       margin: 0;
@@ -184,7 +194,7 @@ export default {
       transform-origin: 50% 50%;
       transform: rotate(45deg);
       @include bp(1200) {
-        width: 3rem;
+        width: 4rem;
       }
 
       &:last-child {
@@ -193,7 +203,10 @@ export default {
     }
   }
   &-modal-main-article {
+    display: flex;
+    flex-direction: column;
     @include bp(1024) {
+      display: inline-block;
       padding: 0 4rem 4rem 0;
     }
   }
