@@ -47,11 +47,6 @@ export default {
       return this.$store.state.activeSection[0];
     },
   },
-  mounted() {
-    console.log("overlay mounted");
-    /*     this.$refs["content"].scrollTop = 0;
-    this.$refs["content"].scrollTo(0, 0); */
-  },
   methods: {
     closeModal() {
       this.$store.commit("toggleModal", false);
