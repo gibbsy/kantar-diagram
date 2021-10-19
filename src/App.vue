@@ -152,6 +152,9 @@ export default {
     font-weight: 400;
     margin: 1rem 0;
     width: 100%;
+    @include bp(768) {
+      width: auto;
+    }
     &:before {
       content: "";
       position: absolute;
@@ -174,9 +177,6 @@ export default {
     width: 100%;
     max-width: 1440px;
     padding: 2rem;
-    @include bp(768) {
-      width: auto;
-    }
   }
 }
 </style>
