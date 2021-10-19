@@ -30,6 +30,7 @@ export default class AppGfx extends PIXI.Application {
     });
     this.appData = appData;
     this.domElement = domElement;
+    this.elWidth = domElement.offsetWidth;
     this.loaded = 0;
     this.animating = true;
     this.rendering = true;
@@ -54,7 +55,7 @@ export default class AppGfx extends PIXI.Application {
 
   init() {
     // called after assets have loaded
-    const { view, events, stage } = this;
+    const { view, stage } = this;
     stage.interactive = true;
     this.domElement.appendChild(view);
 
@@ -67,16 +68,17 @@ export default class AppGfx extends PIXI.Application {
       this.resizing = window.setTimeout(this.onResize.bind(this), delay);
     });
 
-    events.on("USER_ACTION", (e) => {
-      this.userAction(e);
-    });
     this.diagram = new Diagram(this);
   }
   onResize() {
     const { renderer, view, events } = this;
     const el = view.parentNode;
-    renderer.resize(el.clientWidth, el.clientHeight);
-    events.emit("WINDOW_RESIZE");
+    const newWidth = el.offsetWidth;
+    if (newWidth !== this.elWidth) {
+      renderer.resize(el.clientWidth, el.clientHeight);
+      events.emit("WINDOW_RESIZE");
+      this.elWidth = newWidth;
+    }
   }
   appBounds() {
     const { view } = this;
@@ -86,11 +88,7 @@ export default class AppGfx extends PIXI.Application {
     let cy = vh / 2;
     return { vw, vh, cx, cy };
   }
-  userAction(e) {}
   enter() {
     this.diagram.enter();
-  }
-  animate(delta) {
-    this.events.emit("animate", delta);
   }
 }

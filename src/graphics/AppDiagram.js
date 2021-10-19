@@ -218,7 +218,7 @@ export default class Diagram extends PIXI.Container {
     this.addChild(ringContainer);
     this.castMembers.push(ringContainer);
 
-    const centreCirc = new PIXI.Graphics().beginFill(0x121212).drawCircle(0, 0, vw / 3.75 - 3);
+    const centreCirc = new PIXI.Graphics().beginFill(0x121212).drawCircle(0, 0, vw / 3.75);
     centreCirc.alpha = 0.5;
     // centreCirc.pivot.set(cx, cy);
     let str = appData.title;
@@ -246,9 +246,9 @@ export default class Diagram extends PIXI.Container {
     this.castMembers.push(centreCirc, mainTitle, innerLinkTop, innerLinkBottom);
 
     //gold ring
-
+    let ringWidth = vw < 400 ? 3 : 5;
     const goldRing = new PIXI.Container();
-    const ringMask = new PIXI.Graphics().lineStyle(5, 0x000000).drawCircle(0, 0, vw / 3.75);
+    const ringMask = new PIXI.Graphics().lineStyle(ringWidth, 0x000000).drawCircle(0, 0, vw / 3.75);
     const ringTex = new PIXI.Sprite(app.resources.grad_tex.texture);
     ringTex.anchor.set(0.5);
     ringTex.angle = 90;

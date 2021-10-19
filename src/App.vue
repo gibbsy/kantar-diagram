@@ -100,7 +100,7 @@ export default {
   fieldset,
   hr {
     margin: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     font-weight: inherit;
   }
   .k-dia-modal-main-title {

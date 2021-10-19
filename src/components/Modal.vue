@@ -24,6 +24,11 @@
           </div>
           <div class="k-dia-modal-text">
             <block-content :blocks="content.textContent" />
+            <aside class="k-dia-modal-pullout-mobile">
+              <div class="k-dia-modal-aside-mobile">
+                <h2 class="k-dia-heading-thin">{{ content.pullout }}</h2>
+              </div>
+            </aside>
             <button class="k-dia-btn-primary">{{ content.mainCta.title }}</button>
           </div>
         </article>
@@ -44,7 +49,8 @@ export default {
   },
   mounted() {
     console.log("overlay mounted");
-    this.$refs["content"].scrollTop = 0;
+    /*     this.$refs["content"].scrollTop = 0;
+    this.$refs["content"].scrollTo(0, 0); */
   },
   methods: {
     closeModal() {
@@ -78,11 +84,14 @@ export default {
     height: 100%;
     overflow: scroll;
     background-color: #fff;
-    display: flex;
+    /*     display: flex;
     flex-direction: column-reverse;
+    justify-content: flex-end; */
     @include bp(1024) {
       width: 90%;
       height: 80vh;
+      display: flex;
+      justify-content: flex-start;
       flex-direction: row;
     }
     @include bp(1400) {
@@ -107,17 +116,43 @@ export default {
   }
   &-modal-left-col {
     position: relative;
-    display: block;
     width: 100%;
     height: auto;
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: auto;
     background: $beige;
+    display: none;
     @include bp(1024) {
+      display: block;
       width: 24vw;
       height: 100%;
       background-attachment: fixed;
+    }
+  }
+  &-modal-aside-mobile {
+    position: relative;
+    background: $beige;
+    width: 100%;
+    padding: 3rem 1.6rem;
+    margin-bottom: 1.6rem;
+    > * {
+      margin: 0;
+    }
+    @include bp(1024) {
+      display: none;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      width: 0.25rem;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: $goldGrad;
+      @include bp(1024) {
+        width: 0.5rem;
+      }
     }
   }
   &-modal-fixed-aside {
@@ -215,6 +250,7 @@ export default {
     padding-bottom: 56.25%;
     height: 0;
     overflow: hidden;
+    width: 100%;
     max-width: 100%;
     margin-bottom: 2rem;
     #vimeo-player-1 {
