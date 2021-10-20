@@ -48,7 +48,6 @@ export default {
       this.diagram = new AppGfx(el, this.appData);
     },
     diagramEnter() {
-      console.log("ENTER");
       this.diagram.enter();
     },
   },

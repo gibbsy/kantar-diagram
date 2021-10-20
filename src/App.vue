@@ -3,7 +3,7 @@
     <header v-if="isStandalone" id="k-demo-page-header">
       <div class="k-dia-demo-logo">
         <svg viewBox="0 0 149 28" role="img">
-          <use xlink:href="/static/assets/sprite.svg#kantar-logo" />
+          <use xlink:href="static/assets/sprite.svg#kantar-logo" />
         </svg>
       </div>
     </header>
@@ -59,8 +59,7 @@ export default {
     fetchData() {
       sanity.fetch(query).then(
         (diagram) => {
-          console.log(diagram);
-          diagram.appData.title = diagram.appData.title.replace("\\n", "\n");
+          diagram.appData.title = diagram.appData.title.replaceAll("\\n", "\n");
           this.$store.commit("saveAppData", diagram.appData);
           this.$store.commit("savePages", diagram.pages);
           this.loading = false;
@@ -160,8 +159,11 @@ export default {
     outline: none;
     cursor: pointer;
   }
-  button.k-dia-btn-primary {
+  button.k-dia-btn-primary,
+  a.k-dia-btn-primary {
     position: relative;
+    display: inline-block;
+    text-decoration: none;
     border: none;
     outline: none;
     background: $darkGrey;

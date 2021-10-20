@@ -29,7 +29,9 @@
                 <h2 class="k-dia-heading-thin">{{ content.pullout }}</h2>
               </div>
             </aside>
-            <button class="k-dia-btn-primary">{{ content.mainCta.title }}</button>
+            <a v-if="!isStandalone" :href="content.mainCta.link.href" class="k-dia-btn-primary">{{
+              content.mainCta.title
+            }}</a>
           </div>
         </article>
       </div>
@@ -45,6 +47,9 @@ export default {
   computed: {
     content() {
       return this.$store.state.activeSection[0];
+    },
+    isStandalone() {
+      return this.$store.state.isStandalone;
     },
   },
   methods: {
@@ -101,7 +106,7 @@ export default {
   &-modal-main-col {
     // flex-basis: 70%;
     position: relative;
-    padding: 2rem;
+    padding: 3rem 2rem;
     @include bp(1200) {
       padding: 6rem 3rem 3rem 2rem;
     }
