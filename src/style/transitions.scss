@@ -1,6 +1,15 @@
+.slow-delay-fade-enter-active,
+.slow-delay-fade-leave-active {
+  transition: opacity 1s;
+  transition-delay: 5s;
+}
+.slow-delay-fade-enter,
+.slow-delay-fade-leave-to {
+  opacity: 0;
+}
 .slow-fade-enter-active,
 .slow-fade-leave-active {
-  transition: opacity 2s;
+  transition: opacity 1s;
 }
 .slow-fade-enter,
 .slow-fade-leave-to {

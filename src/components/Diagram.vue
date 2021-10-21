@@ -85,5 +85,10 @@ export default {
   canvas {
     width: 100%;
   }
+  /*   @include bpMax(767) {
+    .standalone & {
+      // margin-top: -10px;
+    }
+  } */
 }
 </style>

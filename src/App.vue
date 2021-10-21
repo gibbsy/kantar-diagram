@@ -1,19 +1,27 @@
 <template>
   <div :class="['k-dia-container', { standalone: isStandalone }, lang.toString()]">
-    <header v-if="isStandalone" id="k-demo-page-header">
-      <div class="k-dia-demo-logo">
-        <svg viewBox="0 0 149 28" role="img">
-          <use xlink:href="static/assets/sprite.svg#kantar-logo" />
-        </svg>
-      </div>
-    </header>
+    <transition name="slow-fade" appear>
+      <header v-if="isStandalone" class="k-dia-page-header">
+        <div class="k-dia-demo-logo">
+          <svg viewBox="0 0 149 28" role="img">
+            <use xlink:href="static/assets/sprite.svg#kantar-logo" />
+          </svg>
+        </div>
+        <div class="k-dia-title-container">
+          <h1 class="k-dia-main-title">{{ appData.standaloneTitle }}</h1>
+          <p>{{ appData.standaloneSubtitle }}</p>
+        </div>
+      </header>
+    </transition>
     <app-body v-if="loading == false" />
     <div v-if="error !== null">
       <p>Sorry, we couldn't load the data.</p>
     </div>
-    <footer v-if="isStandalone">
-      <p id="k-dia-copyright">© Kantar Group and Affiliates 2021</p>
-    </footer>
+    <transition name="slow-delay-fade" appear>
+      <footer>
+        <p id="k-dia-copyright">© Kantar Group and Affiliates 2021</p>
+      </footer></transition
+    >
   </div>
 </template>
 
@@ -25,7 +33,7 @@ import config from "./config.js";
 const query = `
 {
   "appData": *[_type=="diagram" && version=="${config.lang}"][0]{
-  title, fontSize,
+  standaloneTitle, standaloneSubtitle, title, fontSize,
   mainArcs[]->{label, _id}, centreLinkTop->{label, _id}, centreLinkBottom->{label, _id}, 
   blackRing->{label, _id}, outerLinkLeft->{label, _id}, outerLinkRight->{label, _id}, bottomBtns[]->{label, _id}
 }, 
@@ -43,6 +51,9 @@ export default {
     };
   },
   computed: {
+    appData() {
+      return this.$store.state.appData;
+    },
     isStandalone() {
       return this.$store.state.isStandalone;
     },
@@ -122,8 +133,12 @@ export default {
     margin: 0;
     margin-bottom: 2rem;
     font-weight: inherit;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
-  .k-dia-modal-main-title {
+  .k-dia-modal-main-title,
+  .k-dia-main-title {
     font-size: 2rem;
     line-height: 1.25;
     @include bp(720) {
@@ -168,7 +183,7 @@ export default {
     outline: none;
     background: $darkGrey;
     color: #fff;
-    padding: 1.8rem 4rem;
+    padding: 1.8rem 3rem;
     font-size: 1.6rem;
     cursor: pointer;
     overflow: hidden;
@@ -177,6 +192,9 @@ export default {
     width: 100%;
     @include bp(768) {
       width: auto;
+    }
+    @include bp(1024) {
+      padding: 1.8rem 4rem;
     }
     &:before {
       content: "";
@@ -202,24 +220,66 @@ export default {
     padding: 0 2rem;
   }
 
-  #k-demo-content {
+  .k-dia-page-header {
     position: relative;
-    width: 100%;
-    padding-bottom: 10vh;
-  }
-  #k-demo-page-header {
-    width: 100%;
     display: flex;
-    align-items: center;
-    padding: 0 20px;
+    flex-direction: row-reverse;
+    padding: 20px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    background: #000;
+    @include bp(768) {
+      align-items: center;
+      padding: 30px 30px 20px 30px;
+    }
+    @include bp(1024) {
+      flex-direction: column;
+      position: absolute;
+      background: none;
+      top: 0;
+      left: 0;
+      align-items: flex-start;
+      justify-content: flex-start;
+      max-width: 33vw;
+    }
+  }
+
+  .k-dia-title-container {
+    line-height: 1.2;
+    color: #fff;
+    h1,
+    h2 {
+      line-height: 1;
+      margin-bottom: 0;
+    }
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+    @include bp(1024) {
+      color: #000;
+    }
   }
 
   .k-dia-demo-logo {
     position: relative;
     width: 100px;
-    padding-top: 20px;
     display: inline-block;
+    svg {
+      fill: #fff;
+      width: 100%;
+      @include bp(1024) {
+        fill: #000;
+      }
+    }
     /* margin-top: auto; */
+    @include bp(768) {
+      width: 120px;
+    }
+    @include bp(1080) {
+      width: 140px;
+    }
   }
 
   footer {
@@ -229,6 +289,7 @@ export default {
     margin-top: 1rem;
     justify-content: flex-end;
     padding: 0 20px;
+    transition-delay: 4s;
 
     p {
       font-size: 1.4rem;
@@ -240,29 +301,6 @@ export default {
     @include bp(1080) {
       margin-top: 3rem;
       padding: 0 60px;
-    }
-  }
-  .k-dia-demo-logo svg {
-    width: 100%;
-    fill: #000;
-  }
-
-  @media screen and (min-width: 768px) {
-    #k-demo-page-header {
-      padding: 0 40px;
-    }
-    .k-dia-demo-logo {
-      width: 120px;
-      padding-top: 30px;
-    }
-  }
-  @media screen and (min-width: 1080px) {
-    #k-demo-page-header {
-      padding: 0 60px;
-    }
-    .k-dia-demo-logo {
-      width: 140px;
-      padding-top: 30px;
     }
   }
 }
