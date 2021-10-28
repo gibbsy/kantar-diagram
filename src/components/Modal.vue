@@ -29,7 +29,7 @@
                 <h2 class="k-dia-heading-thin">{{ content.pullout }}</h2>
               </div>
             </aside>
-            <a v-if="!isStandalone" :href="content.mainCta.link.href" class="k-dia-btn-primary">{{
+            <a v-if="!isStandalone" class="k-dia-btn-primary" @click.prevent="onClickCta">{{
               content.mainCta.title
             }}</a>
           </div>
@@ -55,6 +55,9 @@ export default {
   methods: {
     closeModal() {
       this.$store.commit("toggleModal", false);
+    },
+    onClickCta() {
+      window.parent.location.href = this.content.mainCta.link.href;
     },
   },
 };
