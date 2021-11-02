@@ -4,7 +4,7 @@
       <header v-if="isStandalone" class="k-dia-page-header">
         <div class="k-dia-demo-logo">
           <svg viewBox="0 0 149 28" role="img">
-            <use xlink:href="static/assets/sprite.svg#kantar-logo" />
+            <use :xlink:href="logoUrl" />
           </svg>
         </div>
         <div class="k-dia-title-container">
@@ -59,6 +59,9 @@ export default {
     },
     lang() {
       return this.$store.state.lang;
+    },
+    logoUrl() {
+      return `${config.assetsPath}sprite.svg#kantar-logo`;
     },
   },
   created() {

@@ -1,3 +1,4 @@
+import config from "../config.js";
 import store from "../store/index.js";
 import bus from "./eventBus.js";
 
@@ -83,7 +84,7 @@ export default class Diagram extends PIXI.Container {
     this.addChild(vidMask);
 
     // video resource
-    const vidRes = new PIXI.resources.VideoResource("static/assets/video-texture.mp4", {
+    const vidRes = new PIXI.resources.VideoResource(`${config.assetsPath}video-texture.mp4`, {
       autoLoad: false,
       autoPlay: false,
       muted: true,
