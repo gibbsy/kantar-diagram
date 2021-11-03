@@ -88,6 +88,8 @@ export default class Diagram extends PIXI.Container {
       autoLoad: false,
       autoPlay: false,
       muted: true,
+      crossOrigin: true,
+      // loadType: PIXI.loaders.Resource.LOAD_TYPE.XHR,
     });
     // for autoplay
     vidRes.source.muted = true;
