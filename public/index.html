@@ -3,31 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://kantarinteractive.3mil-demo.co.uk/assets/vendor.min.js"></script>
+    <!-- vendor library scripts -- required -->
+    <script src="https://cdn.sanity.io/files/k7sqtopt/production/e37a201dd411dc015c317cd106d405d60ca9464d.js"></script>
+    <!-- fonts for demo -->
+    <style>
+      @font-face {
+        font-family: "KantarBrown";
+        src: url("https://cdn.sanity.io/files/k7sqtopt/production/0ec321f274f6fec526903fe7b0051a6459f44634.woff2")
+          format("woff2");
+        font-weight: 400;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "KantarBrown";
+        src: url("https://cdn.sanity.io/files/k7sqtopt/production/6f1a41792123d5d8db75e849f447861631aedb9a.woff2")
+          format("woff2");
+        font-weight: 200;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "KantarBrown";
+        src: url("https://cdn.sanity.io/files/k7sqtopt/production/be477f344531da0eda4086166adeae2ec73b4239.woff2")
+          format("woff2");
+        font-weight: 100;
+        font-style: normal;
+      }
+      body {
+        font-family: "KantarBrown", sans-serif;
+        font-weight: 400;
+      }
+    </style>
+    <!-- base demo styles to emulate Kantar.com -->
     <link
-      rel="preload"
-      href="static/assets/fonts/KantarBrownWeb-Regular.woff2"
-      as="font"
-      crossorigin="anonymous"
+      rel="stylesheet"
+      href="https://cdn.sanity.io/files/k7sqtopt/production/28091beb875e2d4c74dcca7f96dc9c3d383a0b59.css"
     />
-    <link
-      rel="preload"
-      href="static/assets/fonts/KantarBrownWeb-Light.woff2"
-      as="font"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="static/assets/fonts/KantarBrownWeb-Thin.woff2"
-      as="font"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="static/assets/fonts/fonts.css" />
-    <link rel="stylesheet" href="static/assets/demo-style.css" />
     <title>Kantar</title>
   </head>
   <body>
+    <!-- app container -- required -->
     <div id="k-diagram-app"></div>
-    <script src="static/app.js"></script>
+    <!-- app script --required -->
+    <script src="https://cdn.sanity.io/files/k7sqtopt/production/5bf3301169c5840ca5cfed56bd5e06febfc2a3c2.js"></script>
   </body>
 </html>

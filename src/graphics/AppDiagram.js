@@ -84,13 +84,16 @@ export default class Diagram extends PIXI.Container {
     this.addChild(vidMask);
 
     // video resource
-    const vidRes = new PIXI.resources.VideoResource(`${config.assetsPath}video-texture.mp4`, {
-      autoLoad: false,
-      autoPlay: false,
-      muted: true,
-      crossOrigin: true,
-      // loadType: PIXI.loaders.Resource.LOAD_TYPE.XHR,
-    });
+    const vidRes = new PIXI.resources.VideoResource(
+      `https://cdn.sanity.io/files/k7sqtopt/production/624abb430e3526bbaf38ca2e61ff079c5359fd67.mp4`,
+      {
+        autoLoad: false,
+        autoPlay: false,
+        muted: true,
+        crossOrigin: true,
+        // loadType: PIXI.loaders.Resource.LOAD_TYPE.XHR,
+      }
+    );
     // for autoplay
     vidRes.source.muted = true;
 

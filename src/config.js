@@ -1,5 +1,5 @@
 export default {
-  lang: "es",
+  lang: "en",
   standalone: false,
-  assetsPath: "https://kantarinteractive.3mil-demo.co.uk/assets/",
+  assetsPath: "https://cdn.sanity.io/images/k7sqtopt/production/",
 };

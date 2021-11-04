@@ -61,7 +61,7 @@ export default {
       return this.$store.state.lang;
     },
     logoUrl() {
-      return `${config.assetsPath}sprite.svg#kantar-logo`;
+      return `https://cdn.sanity.io/images/k7sqtopt/production/5a5ea40f763aea0167b1957b169809bbe91528cb-149x28.svg`;
     },
   },
   created() {
