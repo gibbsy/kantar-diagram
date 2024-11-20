@@ -1,4 +1,4 @@
-import config from "../config.js";
+// import config from "../config.js";
 import store from "../store/index.js";
 import bus from "./eventBus.js";
 
@@ -12,6 +12,7 @@ export default class Diagram extends PIXI.Container {
     this.aniPlayed = false;
     // ref to every el with events
     this.castMembers = [];
+    this.mainTl = "";
     this.aniEls = { arcs: [] };
     Object.assign(this, { app, stage, view, resources, events, appData });
     this.textOpts = {
