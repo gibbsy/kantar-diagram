@@ -56,16 +56,16 @@ export default {
 .k-dia-app-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 5px;
   justify-content: center;
   @include bp(768) {
-    gap: 1rem;
+    gap: 10px;
   }
   @include bp(1200) {
-    gap: 2rem;
+    gap: 20px;
   }
   @include bp(1400) {
-    gap: 3rem;
+    gap: 30px;
   }
   .k-dia-btn-primary {
     opacity: 0;

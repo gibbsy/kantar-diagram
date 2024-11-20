@@ -109,12 +109,12 @@ export default {
   &-modal-main-col {
     // flex-basis: 70%;
     position: relative;
-    padding: 3rem 2rem;
+    padding: 30px 20px;
     @include bp(1200) {
-      padding: 6rem 3rem 3rem 2rem;
+      padding: 60px 30px 30px 20px;
     }
     @include bp(1600) {
-      padding: 8rem 3rem 3rem 2rem;
+      padding: 80px 30px 30px 20px;
     }
   }
   &-modal-left-col {
@@ -137,8 +137,8 @@ export default {
     position: relative;
     background: $beige;
     width: 100%;
-    padding: 3rem 1.6rem;
-    margin-bottom: 1.6rem;
+    padding: 30px 16px;
+    margin-bottom: 16px;
     > * {
       margin: 0;
     }
@@ -148,13 +148,13 @@ export default {
     &:before {
       content: "";
       position: absolute;
-      width: 0.25rem;
+      width: 6px;
       height: 100%;
       top: 0;
       left: 0;
       background: $goldGrad;
       @include bp(1024) {
-        width: 0.5rem;
+        width: 8px;
       }
     }
   }
@@ -162,66 +162,66 @@ export default {
     position: relative;
     width: 100%;
     background-color: $beige;
-    padding: 2rem;
+    padding: 20px;
     @include bp(1024) {
-      padding: 3rem 1.6rem 1.6rem 1.6rem;
+      padding: 30px 16px 16px 16px;
       position: fixed;
       width: inherit;
       height: 80vh;
     }
     @include bp(1200) {
-      padding: 6rem 2rem 3rem 3rem;
+      padding: 60px 30px 20px 24px;
     }
     @include bp(1600) {
-      padding: 8rem 2rem 3rem 3rem;
+      padding: 80px 20px 30px 30px;
     }
     &:before {
       content: "";
       position: absolute;
-      width: 0.25rem;
+      width: 6px;
       height: 100%;
       top: 0;
       left: 0;
       background: $goldGrad;
       @include bp(1024) {
-        width: 0.5rem;
+        width: 8px;
       }
     }
   }
   &-modal-close-btn-container {
     position: relative;
-    width: 3rem;
-    height: 3rem;
+    width: 30px;
+    height: 30px;
     margin-left: auto;
     margin-bottom: 8px;
     @include bp(1024) {
       position: absolute;
-      top: 2rem;
-      right: 2rem;
+      top: 20px;
+      right: 20px;
       margin: 0;
     }
     @include bp(1200) {
-      width: 4rem;
-      height: 4rem;
+      width: 40px;
+      height: 40px;
     }
   }
   &-modal-close-btn {
     position: relative;
     display: inline-block;
-    width: 3rem;
-    height: 3rem;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: none;
     @include bp(1024) {
       position: fixed;
     }
     @include bp(1200) {
-      width: 4rem;
-      height: 4rem;
+      width: 40px;
+      height: 40px;
     }
     span {
       position: absolute;
-      width: 3rem;
+      width: 30px;
       height: 2px;
       left: 0;
       margin: 0;
@@ -232,7 +232,7 @@ export default {
       transform-origin: 50% 50%;
       transform: rotate(45deg);
       @include bp(1200) {
-        width: 4rem;
+        width: 40px;
       }
 
       &:last-child {
@@ -245,7 +245,7 @@ export default {
     flex-direction: column;
     @include bp(1024) {
       display: inline-block;
-      padding: 0 4rem 4rem 0;
+      padding: 0 40px 40px 0;
     }
   }
   &-video-wrapper {
@@ -255,7 +255,7 @@ export default {
     overflow: hidden;
     width: 100%;
     max-width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
     #vimeo-player-1 {
       position: absolute;
       top: 0;

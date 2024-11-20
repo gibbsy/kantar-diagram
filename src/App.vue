@@ -19,7 +19,7 @@
     </div>
     <transition name="slow-delay-fade" appear>
       <footer>
-        <p id="k-dia-copyright">© Kantar Group and Affiliates 2021</p>
+        <p id="k-dia-copyright">© Kantar Media</p>
       </footer></transition
     >
   </div>
@@ -98,7 +98,8 @@ export default {
   font-weight: 200;
   font-style: normal;
   color: #000;
-  font-size: 1.6rem;
+  letter-spacing: 0.3px;
+  font-size: 1rem;
   line-height: 1.5;
   width: 100%;
   height: 100%;
@@ -114,7 +115,7 @@ export default {
   }
 
   @include bp(1080) {
-    font-size: 1.8rem;
+    font-size: 1.125rem;
   }
 
   h1,
@@ -134,7 +135,7 @@ export default {
   fieldset,
   hr {
     margin: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 12px;
     font-weight: inherit;
     &:last-child {
       margin-bottom: 0;
@@ -142,34 +143,33 @@ export default {
   }
   .k-dia-modal-main-title,
   .k-dia-main-title {
-    font-size: 2rem;
+    font-size: 1.25rem;
     line-height: 1.25;
     @include bp(720) {
-      font-size: 2.4rem;
+      font-size: 1.5rem;
     }
     @include bp(1080) {
-      font-size: 3rem;
+      font-size: 1.825rem;
     }
   }
   .k-dia-heading-thin {
-    font-size: 1.8rem;
+    font-size: 1.125rem;
     line-height: 1.25;
     font-weight: 100;
     @include bp(720) {
-      font-size: 2.2rem;
-      line-height: 3.2rem;
+      font-size: 1.375rem;
+      line-height: 1.5;
     }
     @include bp(1080) {
-      font-size: 2.8rem;
-      line-height: 4.2rem;
+      font-size: 1.75rem;
     }
   }
   p,
   a,
   li {
-    font-size: 1.6rem;
+    font-size: 1rem;
     @include bp(1080) {
-      font-size: 1.8rem;
+      font-size: 1.125rem;
     }
   }
   button {
@@ -186,23 +186,23 @@ export default {
     outline: none;
     background: $darkGrey;
     color: #fff;
-    padding: 1.8rem 3rem;
-    font-size: 1.6rem;
+    padding: 20px 30px;
+    font-size: 1rem;
     cursor: pointer;
     overflow: hidden;
     font-weight: 400;
-    margin: 1rem 0;
+    margin: 10px 0;
     width: 100%;
     @include bp(768) {
       width: auto;
     }
     @include bp(1024) {
-      padding: 1.8rem 4rem;
+      padding: 18px 40px;
     }
     &:before {
       content: "";
       position: absolute;
-      width: 0.8rem;
+      width: 8px;
       height: 100%;
       left: 0;
       top: 0;
@@ -220,7 +220,7 @@ export default {
     align-items: center;
     width: 100%;
     max-width: 1440px;
-    padding: 0 2rem;
+    padding: 0 20px;
   }
 
   .k-dia-page-header {
@@ -289,20 +289,20 @@ export default {
     width: 100%;
     font-weight: 200;
     display: flex;
-    margin-top: 1rem;
+    margin-top: 10px;
     justify-content: flex-end;
     padding: 0 20px;
     transition-delay: 4s;
 
     p {
-      font-size: 1.4rem;
+      font-size: 0.875rem;
     }
     @include bp(768) {
-      margin-top: 2rem;
+      margin-top: 20px;
       padding: 0 40px;
     }
     @include bp(1080) {
-      margin-top: 3rem;
+      margin-top: 30px;
       padding: 0 60px;
     }
   }
