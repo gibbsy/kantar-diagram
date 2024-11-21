@@ -16,7 +16,7 @@ export default class Diagram extends PIXI.Container {
     this.aniEls = { arcs: [] };
     Object.assign(this, { app, stage, view, resources, events, appData });
     this.textOpts = {
-      fontFamily: "KantarBrown",
+      fontFamily: "Kantar Brown",
       fontWeight: "400",
       align: "center",
       fontSize: appData.fontSize | 20,
@@ -426,7 +426,7 @@ export default class Diagram extends PIXI.Container {
     const { app } = this;
     let rad = radius * 2;
     let text = new PIXI.Text(label, {
-      fontFamily: "KantarBrown",
+      fontFamily: "Kantar Brown",
       fontWeight: "400",
       fontSize: fontSize * 2,
       fill: fill | 0x000000,

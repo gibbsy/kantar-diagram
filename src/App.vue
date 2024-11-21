@@ -18,10 +18,10 @@
       <p>Sorry, we couldn't load the data.</p>
     </div>
     <transition name="slow-delay-fade" appear>
-      <footer>
+      <div class="app-footer">
         <p id="k-dia-copyright">© Kantar Media</p>
-      </footer></transition
-    >
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -63,6 +63,9 @@ export default {
     logoUrl() {
       return `https://cdn.sanity.io/images/k7sqtopt/production/5a5ea40f763aea0167b1957b169809bbe91528cb-149x28.svg`;
     },
+    modalOn() {
+      return this.$store.state.modalOn;
+    },
   },
   created() {
     this.fetchData();
@@ -87,19 +90,22 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "./node_modules/normalize.css/normalize";
 @import "./style/vars.scss";
 @import "./style/_mixins-utils.scss";
 @import "./style/reset.scss";
 @import "./style/transitions.scss";
 
+#k-diagram-app,
 .k-dia-container {
-  font-family: "KantarBrown", sans-serif;
-  font-weight: 200;
+  font-family: "Kantar Brown", sans-serif !important;
+  font-weight: 300;
   font-style: normal;
+  font-size: 1rem;
+}
+
+.k-dia-container {
   color: #000;
   letter-spacing: 0.3px;
-  font-size: 1rem;
   line-height: 1.5;
   width: 100%;
   height: 100%;
@@ -155,7 +161,7 @@ export default {
   .k-dia-heading-thin {
     font-size: 1.125rem;
     line-height: 1.25;
-    font-weight: 100;
+    font-weight: 200;
     @include bp(720) {
       font-size: 1.375rem;
       line-height: 1.5;
@@ -167,6 +173,7 @@ export default {
   p,
   a,
   li {
+    font-weight: 300;
     font-size: 1rem;
     @include bp(1080) {
       font-size: 1.125rem;
@@ -285,9 +292,9 @@ export default {
     }
   }
 
-  footer {
+  .app-footer {
     width: 100%;
-    font-weight: 200;
+    font-weight: 300;
     display: flex;
     margin-top: 10px;
     justify-content: flex-end;
