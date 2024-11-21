@@ -22,17 +22,6 @@ export default {
     Modal,
   },
   computed: mapState(["appData", "modalOn", "isStandalone"]),
-  watch: {
-    modalOn(val) {
-      console.log("modalOn", val);
-
-      if (val) {
-        document.body.classList.add("no-scroll");
-      } else {
-        document.body.classList.remove("no-scroll");
-      }
-    },
-  },
 };
 </script>
 

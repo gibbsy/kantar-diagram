@@ -67,6 +67,15 @@ export default {
       return this.$store.state.modalOn;
     },
   },
+  watch: {
+    modalOn(val) {
+      if (val) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
+    },
+  },
   created() {
     this.fetchData();
     this.$store.commit("setStandalone", config.standalone);
