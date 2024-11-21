@@ -79,6 +79,7 @@ export default {
     justify-content: center;
     margin: 0;
     padding: 0;
+    z-index: 1000;
   }
   &-modal-content {
     position: relative;

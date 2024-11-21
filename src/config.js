@@ -1,5 +1,5 @@
 export default {
-  lang: "en",
+  lang: "es",
   standalone: false,
   assetsPath: "https://cdn.sanity.io/images/k7sqtopt/production/",
 };
